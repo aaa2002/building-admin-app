@@ -1,15 +1,15 @@
-# Info
+### Info
 
 Serveru merge pe :8000
 Clientu merge pe :8080
 
-# SERVER
+### SERVER
 
-### cd server
-### python3 manage.py runserver
+```cd server```
+```python3 manage.py runserver```
 
-# CLIENT
+### CLIENT
 
-### npm install (prima data sau cand se da pull)
+```npm install //(prima data sau cand se da pull)```
 
-### npm run serve
+```npm run serve```
