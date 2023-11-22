@@ -10,8 +10,6 @@ Clientu merge pe :3000
 
 # CLIENT
 
-### cd template
-
 ### npm install (prima data sau cand se da pull)
 
 ### npm start
