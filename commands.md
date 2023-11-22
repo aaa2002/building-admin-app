@@ -1,7 +1,7 @@
 # Info
 
 Serveru merge pe :8000
-Clientu merge pe :3000
+Clientu merge pe :8080
 
 # SERVER
 
