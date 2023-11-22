@@ -12,4 +12,4 @@ Clientu merge pe :3000
 
 ### npm install (prima data sau cand se da pull)
 
-### npm start
+### npm run serve
