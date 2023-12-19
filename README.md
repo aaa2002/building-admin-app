@@ -4,6 +4,7 @@
 * Django
 * Real time chat
 * Recommendation system (x)
+* Docker (x)
 * gRPC and Protocol buffers for realtime chat
 * maps api
 
