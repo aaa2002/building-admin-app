@@ -7,6 +7,7 @@
 * Docker (x)
 * gRPC and Protocol buffers for realtime chat
 * maps api
+* authentication
 
 ## Project setup
 ```
