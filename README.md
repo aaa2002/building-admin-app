@@ -1,5 +1,12 @@
 # building-admin-app
 
+## Features
+* Django
+* Real time chat
+* Recommendation system (x)
+* gRPC and Protocol buffers for realtime chat
+* maps api
+
 ## Project setup
 ```
 npm install
