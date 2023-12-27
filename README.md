@@ -6,7 +6,7 @@
 * Recommendation system (x)
 * Docker (x)
 * gRPC and Protocol buffers for realtime chat
-* maps api
+* (Google) maps API
 * authentication
 
 ## Project setup
@@ -33,4 +33,15 @@ npm run lint
 ```
 cd server
 python3 manage.py runserver
+```
+
+### Build and run docker image
+
+```bash
+# debug
+./deploy_server.sh 
+
+# prod
+./deploy_server.sh -p 
+
 ```
