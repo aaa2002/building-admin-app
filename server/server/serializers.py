@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from .model.models import Accommodation
+from .model.models import Apartment
 
-class AccommodationSerializer(serializers.ModelSerializer):
+class ApartmentSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Accommodation
+        model = Apartment
         fields = '__all__'

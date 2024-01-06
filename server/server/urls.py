@@ -15,13 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views.accomodationListView import AccommodationListCreateView
+from .views.apartmentListView import ApartmentListCreateView
 
 urlpatterns = [
     path(
-        "api/accommodation/",
-        AccommodationListCreateView.as_view(),
-        name="accommodation-list-create",
+        "api/apartment/",
+        ApartmentListCreateView.as_view(),
+        name="apartment-list-create",
     ),
     path("admin/", admin.site.urls),
 ]
