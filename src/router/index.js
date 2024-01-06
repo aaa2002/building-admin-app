@@ -1,9 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from '../views/HomeView.vue';
+import RecommendedView from '../views/RecommendedView.vue';
+import ApartmentView from '../views/ApartmentView.vue';
 
 const routes = [
-    { path: '/', component: HomeView },
-  ];
+  { path: '/', component: RecommendedView, name: 'home' },
+  { path: '/apartment/:id', name: 'apartment', component: ApartmentView },
+  { path: '/apartments', name: 'apartments' },
+];
 
 const router = createRouter({
   history: createWebHistory(),
