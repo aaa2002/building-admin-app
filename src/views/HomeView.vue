@@ -1,27 +1,61 @@
 <template>
-  <div>HOME</div>
+  <v-app-bar>
+    <v-app-bar-nav-icon @click="toggleDrawer"></v-app-bar-nav-icon>
+    <v-toolbar-title>Buy-A-House</v-toolbar-title>
+    <v-spacer></v-spacer>
+      <v-btn text><v-icon class="mr-2" small>mdi-account</v-icon> Profile</v-btn>
+    <v-btn text>Log Out</v-btn>
+    <v-btn text>Log In</v-btn>
+  </v-app-bar>
+
+  <v-navigation-drawer v-model="drawer" app>
+    <v-list>
+      <v-list-item class="drawer-item">
+        <v-btn
+          style="width: 100% !important; justify-content: flex-start"
+          :elevation="0"
+          :to="{ name: 'home' }"
+        >
+          <v-icon class="mr-2">mdi-home</v-icon>
+          <v-list-item-title>Home</v-list-item-title>
+        </v-btn>
+      </v-list-item>
+      <v-list-item class="drawer-item">
+        <v-btn
+          style="width: 100% !important; justify-content: flex-start"
+          :elevation="0"
+          :to="{ name: 'home' }"
+        >
+          <v-icon class="mr-2">mdi-account-key</v-icon>
+          <v-list-item-title>Admins</v-list-item-title>
+        </v-btn>
+      </v-list-item>
+      <v-list-item class="drawer-item">
+        <v-btn
+          style="width: 100% !important; justify-content: flex-start"
+          :elevation="0"
+          :to="{ name: 'home' }"
+        >
+          <v-icon class="mr-2">mdi-post-outline</v-icon>
+          <v-list-item-title>My Posts</v-list-item-title>
+        </v-btn>
+      </v-list-item>
+    </v-list>
+  </v-navigation-drawer>
+
+  <v-container>
+    <router-view />
+  </v-container>
 </template>
 
 <script setup>
 import { ref } from "vue";
 
-const accomodations = ref([]);
+const drawer = ref(false);
 
-const fetchAccomodations = async () => {
-  let response = [];
-  try {
-    response = await fetch("http://localhost:8000/accomodation");
-  } catch (error) {
-    console.log(error);
-  }
-  accomodations.value = await JSON.stringify(response);
+const toggleDrawer = () => {
+  drawer.value = !drawer.value;
 };
-
-const init = () => {
-  fetchAccomodations();
-};
-
-init();
 </script>
 
 <style lang="scss" scoped></style>
