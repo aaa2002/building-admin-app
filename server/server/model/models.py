@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from enum import IntEnum    
 
+
 class Apartment(models.Model):
     id = models.CharField(max_length=255, primary_key=True)
     address = models.CharField(max_length=255)

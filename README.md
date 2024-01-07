@@ -9,6 +9,11 @@
 * (Google) maps API
 * authentication
 
+## Frontend Requirments 
+```
+npm install axios
+```
+
 ## Project setup
 ```
 npm install

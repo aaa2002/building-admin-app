@@ -26,3 +26,6 @@ pnpm-debug.log*
 
 */__pycache__/*
 *.pyc
+
+#DB
+server/db.sqlite3
