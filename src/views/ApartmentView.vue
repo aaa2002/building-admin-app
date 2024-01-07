@@ -10,7 +10,7 @@
       <Marker :options="{ position: center }" />
 
       <div class="map-wrapper">
-        <MapComponent :lat="mockLat" :lng="mockLng" />
+        <MapComponent :lat="apartment.building.lat" :lng="apartment.building.lng" />
       </div>
 
       <v-card-actions>
@@ -35,8 +35,6 @@ const images = [
   "https://chnapartments.com/assets/images/cache/kitchen-and-living-room-a4be940df9ffd81de9014c7fc0f53336.jpg",
   "https://www.bhg.com/thmb/dgy0b4w_W0oUJUxc7M4w3H4AyDo=/1866x0/filters:no_upscale():strip_icc()/living-room-gallery-shelves-l-shaped-couch-ELeyNpyyqpZ8hosOG3EG1X-b5a39646574544e8a75f2961332cd89a.jpg"
 ];
-const mockLat = 46.77121;
-const mockLng = 23.623634;
 
 const apartment = computed(() =>
   store.state.apartments.find(
