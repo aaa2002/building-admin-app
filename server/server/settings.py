@@ -50,10 +50,12 @@ REST_FRAMEWORK={
 # Might need to change these two in order to work
 CORS_ALLOWED_ORIGINS=[
     "http://192.168.1.89:8080",
+    "http://localhost:8080",
 ]
 
 CSRF_TRUSTED_ORIGINS =[
     "http://192.168.1.89:8080",
+    "http://localhost:8080",
 ]
 
 INSTALLED_APPS = [

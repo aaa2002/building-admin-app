@@ -6,11 +6,11 @@
         <v-text-field v-model="form.email" label="Email"></v-text-field>
         <v-text-field v-model="form.password1" label="Password" type="password"></v-text-field>
         <v-text-field v-model="form.password2" label="Password" type="password"></v-text-field>
-    <template v-if="errors">
-        <div class="bg-red-300 text-white">
-            <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
-        </div>
-    </template>
+        <template v-if="errors.length > 0">
+            <div class="bg-red-300 text-black">
+                <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
+            </div>
+        </template>
 
         <v-btn type="submit" color="primary">Sign Up</v-btn>
       </v-form>
