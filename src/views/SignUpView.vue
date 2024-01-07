@@ -1,87 +1,125 @@
 <template>
-    <v-app>
-        <v-container>
-      <v-form @submit.prevent="submitForm">
-        <v-text-field v-model="form.name" label="Name"></v-text-field>
-        <v-text-field v-model="form.email" label="Email"></v-text-field>
-        <v-text-field v-model="form.password1" label="Password" type="password"></v-text-field>
-        <v-text-field v-model="form.password2" label="Password" type="password"></v-text-field>
-        <template v-if="errors.length > 0">
-            <div class="bg-red-300 text-black">
-                <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
-            </div>
-        </template>
+  <v-container>
+    <v-snackbar v-model="snackbar" :timeout="timeout" color="green">
+      Success
 
-        <v-btn type="submit" color="primary">Sign Up</v-btn>
-      </v-form>
+      <template v-slot:actions>
+        <v-btn variant="text" @click="snackbar = false"> Close </v-btn>
+      </template>
+    </v-snackbar>
 
-      <router-view />
-    </v-container>
-  </v-app>
- </template>
+    <v-form @submit.prevent="submitForm">
+      <v-text-field
+        class="mb-4"
+        v-model="form.name"
+        label="Name"
+        :rules="[(v) => !!v || 'Name is required']"
+      ></v-text-field>
+      <v-text-field
+        class="mb-4"
+        v-model="form.email"
+        label="Email"
+        :rules="emailRules"
+      ></v-text-field>
+      <v-text-field
+        class="mb-4"
+        v-model="form.password1"
+        :rules="passwordRules"
+        label="Password"
+        type="password"
+      ></v-text-field>
+      <v-text-field
+        class="mb-4"
+        v-model="form.password2"
+        :rules="passwordRules"
+        label="Password"
+        type="password"
+      ></v-text-field>
 
-<script>
-import axios from 'axios';
+      <v-btn type="submit" color="primary" :disabled="!isFormValid"
+        >Sign Up</v-btn
+      >
+    </v-form>
+  </v-container>
+</template>
 
-export default {
-    setup(){
-    },
+<script setup>
+import { ref, computed } from "vue";
+import axios from "axios";
+import { useRouter } from "vue-router";
 
-    data(){
-        return{
-            form:{
-                email:'',
-                name:'',
-                password1:'',
-                password2:'',
-            },
-            errors: [],
+const router = useRouter();
+
+const passwordRules = [
+  (v) => !!v || "Password is required",
+  (v) => v.length >= 8 || "Password must be at least 8 characters",
+  (v) => v === form.value.password1 || "Passwords must match",
+];
+const emailRules = [
+  (v) => !!v || "E-mail is required",
+  (v) => /.+@.+/.test(v) || "E-mail must be valid",
+];
+
+const isFormValid = computed(() => {
+  return (
+    emailRules.every((rule) => rule(form.value.email) === true) &&
+    passwordRules.every((rule) => rule(form.value.password1) === true) &&
+    passwordRules.every((rule) => rule(form.value.password2) === true)
+  );
+});
+
+const snackbar = ref(false);
+const form = ref({
+  email: "",
+  name: "",
+  password1: "",
+  password2: "",
+});
+
+const errors = ref([]);
+
+const submitForm = () => {
+  errors.value = [];
+
+  if (form.value.email === "") {
+    errors.value.push("Enter an email");
+  }
+
+  if (form.value.name === "") {
+    errors.value.push("Enter a name");
+  }
+
+  if (form.value.password1 === "") {
+    errors.value.push("Enter a password");
+  }
+
+  if (form.value.password1 !== form.value.password2) {
+    errors.value.push("Passwords do not match");
+  }
+
+  if (errors.value.length === 0) {
+    axios
+      .post("/api/signup/", form.value)
+      .then((response) => {
+        console.log(response);
+        if (response.data.message === "success") {
+          console.log("Connected");
+          console.log(form.value);
+          form.value.email = "";
+          form.value.name = "";
+          form.value.password1 = "";
+          form.value.password2 = "";
+          snackbar.value = true;
+          setTimeout(() => {
+            router.push({ name: "login" });
+          }, 2000);
+        } else {
+          console.log("Failed to post");
         }
-    },
-
-    methods: {
-        submitForm(){
-            this.errors=[]
-
-            if (this.form.email ===''){
-                this.errors.push("Enter a email")
-            }
-
-            if (this.form.name ===''){
-                this.errors.push("Enter a name")
-            }
-            
-            if (this.form.password1 ===''){
-                this.errors.push("Enter a password")
-            }
-
-            if (this.form.password1 !== this.form.password2){
-                this.errors.push("Passwords do not match")
-            }
-
-            if (this.errors.length === 0){
-                axios
-                    .post('/api/signup/',this.form)
-                    .then (response => {
-                        if(response.data.message === 'success'){
-                            console.log("Connected")
-                            console.log(this.form)
-                            this.form.email=''
-                            this.form.name=''
-                            this.form.password1=''
-                            this.form.password2=''
-
-                        }else{
-                            console.log("failed to post")
-                        }
-
-                    })
-                    .catch(error => {
-                        console.log('error',error)
-                    })
-            }
-        }
-    }
-}
-
+      })
+      .catch((error) => {
+        console.log("Error", error);
+      });
+  }
+};
 </script>

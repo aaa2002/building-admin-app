@@ -3,9 +3,14 @@
     <v-app-bar-nav-icon @click="toggleDrawer"></v-app-bar-nav-icon>
     <v-toolbar-title>Buy-A-House</v-toolbar-title>
     <v-spacer></v-spacer>
-      <v-btn text><v-icon class="mr-2" small>mdi-account</v-icon> Profile</v-btn>
-    <v-btn text>Log Out</v-btn>
-    <v-btn text>Log In</v-btn>
+    <v-btn v-if="activeUser.isAuthenticated" text
+      ><v-icon class="mr-2" small>mdi-account</v-icon> Profile</v-btn
+    >
+    <v-btn v-if="activeUser.isAuthenticated" text>Log Out</v-btn>
+    <v-btn v-if="!activeUser.isAuthenticated" :to="{ name: 'login' }" text>Log In</v-btn>
+    <v-btn v-if="!activeUser.isAuthenticated" :to="{ name: 'signup' }" text
+      >Register</v-btn
+    >
   </v-app-bar>
 
   <v-navigation-drawer v-model="drawer" app>
@@ -50,7 +55,11 @@
 
 <script setup>
 import { ref } from "vue";
+import { useStore } from "vuex";
 
+const store = useStore();
+
+const activeUser = ref(store.state.user);
 const drawer = ref(false);
 
 const toggleDrawer = () => {
