@@ -16,14 +16,10 @@ while [[ $# -gt 0 ]]; do
 done
 
 cd server
-docker build -f docker/Dockerfile -t server .        
+docker build -f docker/Dockerfile -t server --no-cache .        
 if [[ $(docker volume ls | tail -n 1 | awk '{print $2}') != "sqlite-volume" ]]; then
     docker volume create sqlite-volume
 fi 
-
-
-
-
 
 docker run ${container_flags} -p 8000:8000 \
     -v sqlite-volume:/server \
