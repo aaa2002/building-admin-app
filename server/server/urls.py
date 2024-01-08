@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from .views.apartmentListView import ApartmentListCreateView
+from . import api
 
 urlpatterns = [
     path('api/',include('account.url')),
@@ -24,5 +25,6 @@ urlpatterns = [
     #     ApartmentListCreateView.as_view(),
     #     name="apartment-list-create",
     # ),
+    path('api/apartments/',api.apartment_list,name=''),
     path("admin/", admin.site.urls),
 ]
