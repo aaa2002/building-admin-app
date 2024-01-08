@@ -8,7 +8,7 @@ import ProfileView from "../views/ProfileView.vue";
 
 const routes = [
   { path: '/',  name: 'home' },
-  { path: '/apartment/:id', name: 'apartment', component: ApartmentView },
+  { path: '/apartment/:name', name: 'apartment', component: ApartmentView },
   { path: '/apartments', name: 'apartments',component: RecommendedView },
   { path: '/signup', name: 'signup', component: SignUpView },
   { path: '/login', name: 'login', component: LoginView},

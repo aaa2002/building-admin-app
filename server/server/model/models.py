@@ -24,7 +24,7 @@ class Apartment(models.Model):
     price = models.PositiveBigIntegerField(null=True)
     description= models.TextField(blank=True,null=True)
     area = models.FloatField(null=True)
-    image = models.ImageField(upload_to="appartment_images",null=True, blank=True)
+    image = models.ImageField(upload_to="apartment_images/",null=True, blank=True)
     building=models.ForeignKey(ApartmentBuilding, on_delete=models.CASCADE)
     
     class Meta:
