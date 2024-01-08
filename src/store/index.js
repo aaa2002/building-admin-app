@@ -1,4 +1,4 @@
-import { createStore } from 'vuex'
+import { createStore } from 'vuex';
 import axios from "axios";
 
 export default createStore({
@@ -176,8 +176,10 @@ export default createStore({
       state.user.access = data.access;
       state.user.refresh = data.refresh;
       state.user.isAuthenticated = true;
+
       localStorage.setItem('user.access', data.access);
       localStorage.setItem('user.refresh', data.refresh);
+      console.log('user.access: ', localStorage.getItem('user.access'))
     },
 
     removeToken(state) {
@@ -205,21 +207,48 @@ export default createStore({
       localStorage.setItem('user.email', state.user.email);
       console.log('User', state.user);
     },
-  },
-  actions: {
-    initStore(context) {
+
+    initStore(state){
       if (localStorage.getItem('user.access')) {
-        context.commit('setToken', {
-          access: localStorage.getItem('user.access'),
-          refresh: localStorage.getItem('user.refresh'),
-        });
-        context.dispatch('refreshToken');
-        console.log('Init user:', context.state.user);
+        console.log('Init user:', state.user);
+        state.user.access  = localStorage.getItem('user.access');
+        state.user.refresh = localStorage.getItem('user.refresh');
+        //state.dispatch('refreshToken');
+      }else{
+        state.user.access = ''
+        state.isAuthenticated = true
       }
     },
 
+    refreshToken(state) {
+      axios.post('/api/refresh/', {
+        refresh: state.user.refresh,
+      })
+        .then((response) => {
+          state.commit('setToken', {
+            access: response.data.access,
+            refresh: state.user.refresh,
+          });
+          axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.access;
+        })
+        .catch((error) => {
+          console.log(error);
+          state.commit('removeToken');
+        });
+      },
+  },
+  actions: {
+    setToken(context, data){
+      context.commit('setToken',data)
+    },
+
+
+    setUserInfo(context, user) {
+      context.setUserInfo.commit('setUserInfo',user)
+    },
+    
     refreshToken(context) {
-      axios.post('/api/refresh', {
+      axios.post('/api/refresh/', {
         refresh: context.state.user.refresh,
       })
         .then((response) => {

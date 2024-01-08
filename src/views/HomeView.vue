@@ -6,9 +6,9 @@
     <v-btn v-if="activeUser.isAuthenticated" text
       ><v-icon class="mr-2" small>mdi-account</v-icon> Profile</v-btn
     >
-    <v-btn v-if="activeUser.isAuthenticated" text>Log Out</v-btn>
-    <v-btn v-if="!activeUser.isAuthenticated" :to="{ name: 'login' }" text>Log In</v-btn>
-    <v-btn v-if="!activeUser.isAuthenticated" :to="{ name: 'signup' }" text
+    <v-btn v-if="activeUser.isAuthenticated" @click="logout" text>Log Out</v-btn>
+    <v-btn v-if="!activeUser.isAuthenticated" :to= "{ name: 'login' }" text>Log In</v-btn>
+    <v-btn v-if="!activeUser.isAuthenticated" :to= "{ name: 'signup' }" text
       >Register</v-btn
     >
   </v-app-bar>
@@ -52,6 +52,20 @@
     <router-view />
   </v-container>
 </template>
+
+<script>
+export default {
+  
+  methods: {
+    logout() {
+ 
+      this.$store.commit('removeToken');
+
+      this.$router.push('/login');
+    },
+  },
+}
+</script>
 
 <script setup>
 import { ref } from "vue";

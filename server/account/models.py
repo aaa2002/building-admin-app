@@ -29,12 +29,11 @@ class CustomUserManager(UserManager):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
 
-        # Make sure to provide the 'name' parameter when creating a superuser
         return self._create_user(name, email, password, **extra_fields)    
 
 class User(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True,default='', blank=True)
     name = models.CharField(max_length=255,blank=True,default='',null=True)
     
     is_active=models.BooleanField(default = True)

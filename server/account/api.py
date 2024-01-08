@@ -4,18 +4,11 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from .forms import SignupForm
 
 @api_view(['GET'])
-@authentication_classes([])
-@permission_classes([])
 def me(request):
-    if request.user.is_authenticated:
         return JsonResponse({
             'id': request.user.id,
             'name': request.user.name,
             'email': request.user.email,
-        })
-    else:
-        return JsonResponse({
-            'message': 'User not authenticated',
         })
 
 @api_view(['POST'])

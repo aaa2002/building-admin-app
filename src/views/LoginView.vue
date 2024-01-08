@@ -26,38 +26,44 @@
   </v-container>
 </template>
 
-<script setup>
-import { ref } from "vue";
-import axios from "axios";
-import { useRouter } from "vue-router";
-import { useStore } from "vuex";
+<script>
+import axios from 'axios';
 
-const store = useStore();
-const router = useRouter();
+export default {
+  data(){
+    return{
+      form:{
+        email:'',
+        password:'',
+      },
+      errors:[]
+    }
+  },
 
-const form = ref({
-  email: "",
-  password: "",
-});
+  methods:{
+    async submitForm(){
+      await axios
+        .post('/api/login/',this.form)
+        .then(response =>{
+          this.$store.commit('setToken',response.data)
+          axios.defaults.headers.common['Authorization']="Bearer " + response.data.access
+        })
+        .catch(error =>{
+          console.log('error',error)
+        })
 
-const submitForm = () => {
-  axios
-    .post("/api/login", {
-      email: form.value.email,
-      password: form.value.password,
-    })
-    .then((response) => {
-      console.log(response);
-      if (response.data.message === "success") {
-        store.commit("setUserInfo", response.data.user);
-
-        router.push({ name: "home" });
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-};
+      await axios
+        .get('/api/me/')
+        .then(response =>{
+            this.$store.commit('setUserInfo',response.data)
+            this.$router.push('/')
+        })
+        .catch(error =>{
+          console.log('error', error)
+        })
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped></style>

@@ -37,14 +37,13 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS' : False
 }
 
-REST_FRAMEWORK={
-    'DEFAULT_AUTHENTICATION_CLASSES':(
-        'rest_framework_simplejwt.authentication.JWTAuthentication'
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-
-    'DEFAULT_PERMISSION_CLASSES':(
-        'rest_framework.permissions.IsAuthenticated'
-    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
 }
 
 # Might need to change these two in order to work
