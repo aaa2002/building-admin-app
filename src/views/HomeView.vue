@@ -3,7 +3,7 @@
     <v-app-bar-nav-icon @click="toggleDrawer"></v-app-bar-nav-icon>
     <v-toolbar-title>Buy-A-House</v-toolbar-title>
     <v-spacer></v-spacer>
-    <v-btn :to="{ name: 'profile' }" v-if="activeUser.isAuthenticated" text
+    <v-btn :to="{ name: 'profile' }" v-if="this.$store.state.user.isAuthenticated" text
       ><v-icon class="mr-2" small>mdi-account</v-icon>
       Profile
     </v-btn>
@@ -26,7 +26,7 @@
           <v-list-item-title>Home</v-list-item-title>
         </v-btn>
       </v-list-item>
-      <v-list-item class="drawer-item" v-if="!activeUser.is_staff">
+      <v-list-item class="drawer-item" v-if="!this.$store.state.user.is_staff">
         <v-btn
           style="width: 100% !important; justify-content: flex-start"
           :elevation="0"
@@ -36,7 +36,7 @@
           <v-list-item-title>Admins</v-list-item-title>
         </v-btn>
       </v-list-item>
-      <v-list-item class="drawer-item" v-if="activeUser.is_staff">
+      <v-list-item class="drawer-item">
         <v-btn
           style="width: 100% !important; justify-content: flex-start"
           :elevation="0"
