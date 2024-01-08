@@ -3,12 +3,12 @@
     <v-app-bar-nav-icon @click="toggleDrawer"></v-app-bar-nav-icon>
     <v-toolbar-title>Buy-A-House</v-toolbar-title>
     <v-spacer></v-spacer>
-    <v-btn v-if="activeUser.isAuthenticated" text
+    <v-btn v-if="this.$store.state.user.isAuthenticated" text
       ><v-icon class="mr-2" small>mdi-account</v-icon> Profile</v-btn
     >
-    <v-btn v-if="activeUser.isAuthenticated" @click="logout" text>Log Out</v-btn>
-    <v-btn v-if="!activeUser.isAuthenticated" :to= "{ name: 'login' }" text>Log In</v-btn>
-    <v-btn v-if="!activeUser.isAuthenticated" :to= "{ name: 'signup' }" text
+    <v-btn v-if="this.$store.state.user.isAuthenticated" @click="logout" text>Log Out</v-btn>
+    <v-btn v-if="!this.$store.state.user.isAuthenticated" :to= "{ name: 'login' }" text>Log In</v-btn>
+    <v-btn v-if="!this.$store.state.user.isAuthenticated" :to= "{ name: 'signup' }" text
       >Register</v-btn
     >
   </v-app-bar>
@@ -39,7 +39,7 @@
         <v-btn
           style="width: 100% !important; justify-content: flex-start"
           :elevation="0"
-          :to="{ name: 'home' }"
+          :to="{ name: 'apartments' }"
         >
           <v-icon class="mr-2">mdi-post-outline</v-icon>
           <v-list-item-title>My Posts</v-list-item-title>
@@ -54,26 +54,40 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
+
+  beforeCreate(){
+    this.$store.dispatch('initStore')
+    const token = this.$store.state.user.access
+    
+    if (token) {
+      axios.defaults.headers.common['Authorization']="Bearer " + token
+    }else{
+      axios.defaults.headers.common['Authorization']=''
+    }
+  },
   
   methods: {
     logout() {
- 
+
       this.$store.commit('removeToken');
 
       this.$router.push('/login');
     },
+    
   },
+  
 }
 </script>
 
 <script setup>
 import { ref } from "vue";
-import { useStore } from "vuex";
+//import { useStore } from "vuex";
 
-const store = useStore();
+//const store = useStore();
 
-const activeUser = ref(store.state.user);
+//const activeUser = ref(store.state.user);
 const drawer = ref(false);
 
 const toggleDrawer = () => {

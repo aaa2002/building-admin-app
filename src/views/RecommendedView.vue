@@ -14,7 +14,7 @@
   </div>
 
   <div class="cards my-12">
-    <v-card class="mb-8" v-for="apartment in accomodations" :key="apartment.id">
+    <v-card class="mb-8" v-for="apartment in apartments" v-bind:key="apartment.id">
       <v-card-title>{{ apartment.name }}</v-card-title>
       <v-card-subtitle>$ {{ apartment.price }}</v-card-subtitle>
       <v-card-text>{{ apartment.description }}</v-card-text>
@@ -26,12 +26,44 @@
   </div>
 </template>
 
+<script>
+import axios from "axios";
+export default {
+  
+  data(){
+      return{
+        apartments:[]
+      }
+  },
+  
+  mounted() {
+    this.getApartments()
+  },
+
+  methods:{
+    getApartments(){
+      axios
+        .get('api/apartments/')
+        .then(response => {
+          console.log('data',response.data)
+          
+          this.apartments=response.data
+        })
+        .catch(error => {
+          console.log('error',error)
+        })
+    }
+  }
+}
+</script>
+
+
 <script setup>
-import { useStore } from "vuex";
-import { computed, ref } from "vue";
+// import { useStore } from "vuex";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 
-const store = useStore();
+// const store = useStore();
 const router = useRouter();
 const loading = ref(false);
 const search = ref("");
@@ -55,11 +87,11 @@ const searchClick = () => {
 //   accomodations.value = await JSON.stringify(response);
 // };
 
-const accomodations = computed(() =>
-  store.state.apartments.filter((apartment) =>
-    apartment.name.includes(search.value)
-  )
-);
+// const accomodations = computed(() =>
+//   store.state.apartments.filter((apartment) =>
+//     apartment.name.includes(search.value)
+//   )
+// );
 
 const openApartmentView = (id) => {
   router.push({ name: "apartment", params: { id: id } });
