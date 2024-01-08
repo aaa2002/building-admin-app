@@ -35,10 +35,15 @@
         label="Password"
         type="password"
       ></v-text-field>
+      <v-select
+        label="Role"
+        :items="account_types"
+        v-model="form.role"
+      ></v-select>
 
-      <v-btn type="submit" color="primary" :disabled="!isFormValid"
-        >Sign Up</v-btn
-      >
+      <v-btn type="submit" color="primary" :disabled="!isFormValid">
+        Sign Up
+      </v-btn>
     </v-form>
   </v-container>
 </template>
@@ -49,6 +54,8 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
+
+const account_types = ["ADMIN", "USER"];
 
 const passwordRules = [
   (v) => !!v || "Password is required",
@@ -74,6 +81,7 @@ const form = ref({
   name: "",
   password1: "",
   password2: "",
+  role: "USER",
 });
 
 const errors = ref([]);
@@ -109,6 +117,7 @@ const submitForm = () => {
           form.value.name = "";
           form.value.password1 = "";
           form.value.password2 = "";
+          form.value.role = "USER";
           snackbar.value = true;
           setTimeout(() => {
             router.push({ name: "login" });
