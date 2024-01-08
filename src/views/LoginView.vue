@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-form @submit.prevent="submitForm">
-      <v-tooltip width="200px" location="start">
+      <v-tooltip width="200px" location="top">
         <template v-slot:activator="{ props }">
           <v-text-field
             v-bind="props"

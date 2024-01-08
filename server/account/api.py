@@ -9,6 +9,7 @@ def me(request):
             'id': request.user.id,
             'name': request.user.name,
             'email': request.user.email,
+            'is_staff': request.user.is_staff,
         })
 
 @api_view(['POST'])
