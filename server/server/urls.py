@@ -26,5 +26,6 @@ urlpatterns = [
     #     name="apartment-list-create",
     # ),
     path('api/apartments/',api.apartment_list,name=''),
+    path('api/apartments/<str:name>/', api.apartment_get, name='apartment-get'),
     path("admin/", admin.site.urls),
 ]

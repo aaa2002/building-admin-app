@@ -19,7 +19,7 @@
       <v-card-subtitle>$ {{ apartment.price }}</v-card-subtitle>
       <v-card-text>{{ apartment.description }}</v-card-text>
       <v-card-actions>
-        <v-btn @click="openApartmentView(apartment.id)" text>More</v-btn>
+        <v-btn @click="openApartmentView(apartment.name)" text>More</v-btn>
         <v-btn text>Contact</v-btn>
       </v-card-actions>
     </v-card>
@@ -93,8 +93,8 @@ const searchClick = () => {
 //   )
 // );
 
-const openApartmentView = (id) => {
-  router.push({ name: "apartment", params: { id: id } });
+const openApartmentView = (name) => {
+  router.push({ name: "apartment", params: { name: name } });
 };
 
 // const init = () => {
