@@ -164,7 +164,7 @@ export default createStore({
       id: null,
       name: null,
       email: null,
-      access: null,
+      is_staff: false,
       refresh: null,
     }
   },
@@ -202,11 +202,15 @@ export default createStore({
       state.user.id = user.id;
       state.user.name = user.name;
       state.user.email = user.email;
+      
       state.user.isAuthenticated = true
+      state.user.is_staff = user.is_staff;
       localStorage.setItem('user.id', state.user.id);
       localStorage.setItem('user.name', state.user.name);
       localStorage.setItem('user.email', state.user.email);
       localStorage.setItem('user.isAuthenticated', state.user.isAuthenticated);
+      localStorage.setItem('user.is_staff', state.user.is_staff);
+
       console.log('User', state.user);
     },
 
