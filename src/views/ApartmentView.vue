@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card v-if="apartment">
-      <ImageCarroussel :images="images" />
+      <img :src=getImage(apartment.image) alt="apartment image">
       <v-card-title class="headline">{{ apartment.name }}</v-card-title>
       <v-card-subtitle class="caption">Price: $ {{ apartment.price }}</v-card-subtitle>
       <v-card-text>{{ apartment.description }}</v-card-text>
@@ -26,7 +26,6 @@ export default {
   data() {
     return {
       apartment: null,
-      images:[]
       
     };
   },
@@ -37,18 +36,22 @@ export default {
     getApartment() {
       const name = this.$route.params.name;
       axios
-        .get(`api/apartments/${name}`)
+        .get(`api/apartments/${name}/`)
         .then(response => {
           console.log('data', response.data.apartment);
           this.apartment = response.data.apartment;
-          this.images.push(this.apartment.images)
+          console.log(response.data.apartment.image)
         })
         .catch(error => {
           console.log('error', error);
           this.apartment = false; // Mark apartment as not found
         });
+    },
+    getImage(imagePath) {
+      return "http://127.0.0.1:8000" + imagePath
     }
   }
+
 };
 </script>
 
