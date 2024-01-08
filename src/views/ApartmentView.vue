@@ -20,6 +20,7 @@
   </v-container>
 </template>
 
+
 <script setup>
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
@@ -42,6 +43,8 @@ const apartment = computed(() =>
   )
 );
 </script>
+
+
 
 <style lang="scss" scoped>
 .headline {

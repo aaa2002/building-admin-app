@@ -202,44 +202,55 @@ export default createStore({
       state.user.id = user.id;
       state.user.name = user.name;
       state.user.email = user.email;
+      
+      state.user.isAuthenticated = true
       state.user.is_staff = user.is_staff;
       localStorage.setItem('user.id', state.user.id);
       localStorage.setItem('user.name', state.user.name);
       localStorage.setItem('user.email', state.user.email);
+      localStorage.setItem('user.isAuthenticated', state.user.isAuthenticated);
       localStorage.setItem('user.is_staff', state.user.is_staff);
+
       console.log('User', state.user);
     },
 
-    initStore(state){
+  },
+  actions: {
+    initStore(context){
       if (localStorage.getItem('user.access')) {
-        console.log('Init user:', state.user);
-        state.user.access  = localStorage.getItem('user.access');
-        state.user.refresh = localStorage.getItem('user.refresh');
-        //state.dispatch('refreshToken');
+        
+        console.log('Init user:', localStorage.getItem('user.isAuthenticated'));
+        context.state.isAuthenticated = true
+        context.state.user.access  = localStorage.getItem('user.access');
+        context.state.user.refresh = localStorage.getItem('user.refresh');
+        context.state.user.id = localStorage.getItem('user.id');
+        context.state.user.name = localStorage.getItem('user.name');
+        context.state.user.email = localStorage.getItem('user.email');
+  
+        context.dispatch('refreshToken');
       }else{
-        state.user.access = ''
-        state.isAuthenticated = true
+        context.state.user.access = ''
+        context.state.isAuthenticated = false
       }
     },
-
-    refreshToken(state) {
-      axios.post('/api/refresh/', {
-        refresh: state.user.refresh,
-      })
+    
+    refreshToken(context) {
+      axios.post('/api/refresh/', {refresh: context.state.user.refresh})
         .then((response) => {
-          state.commit('setToken', {
-            access: response.data.access,
-            refresh: state.user.refresh,
-          });
+          console.log(response)
+          context.state.user.access = response.data.access
+          context.commit('setToken',{
+            access : response.data.access,
+            refresh: context.state.user.refresh
+          })
           axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.access;
         })
         .catch((error) => {
           console.log(error);
-          state.commit('removeToken');
+          context.commit('removeToken');
         });
       },
-  },
-  actions: {
+
     setToken(context, data){
       context.commit('setToken',data)
     },
@@ -247,23 +258,6 @@ export default createStore({
 
     setUserInfo(context, user) {
       context.setUserInfo.commit('setUserInfo',user)
-    },
-    
-    refreshToken(context) {
-      axios.post('/api/refresh/', {
-        refresh: context.state.user.refresh,
-      })
-        .then((response) => {
-          context.commit('setToken', {
-            access: response.data.access,
-            refresh: context.state.user.refresh,
-          });
-          axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.access;
-        })
-        .catch((error) => {
-          console.log(error);
-          context.commit('removeToken');
-        });
     },
   },
   modules: {
