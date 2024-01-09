@@ -23,17 +23,12 @@ from . import api
 
 urlpatterns = [
     path('api/',include('account.url')),
-    # path(
-    #     "api/apartment/",
-    #     ApartmentListCreateView.as_view(),
-    #     name="apartment-list-create",
-    # ),
     path('api/apartments/',api.apartment_list,name=''),
     path('api/apartments/<str:name>/', api.apartment_get, name='apartment-get'),
     path('api/apartments/<str:name>/image/', api.get_apartment_image, name='apartment-image'),
     path('api/add/building/',api.add_apartment_building,name='apartment-building-post'),
     path('api/add/apartment/',api.add_apartment,name='apartment-post'),
-    path('api/buildings',api.add_apartment,name='apartment-building-get'),
+    path('api/buildings/',api.apartment_building_list,name='apartment-building-get'),
     path("admin/", admin.site.urls),
 ]
 

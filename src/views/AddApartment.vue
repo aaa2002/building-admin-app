@@ -14,7 +14,9 @@
     <v-text-field v-model="formData.area" label="Area" required></v-text-field>
     <v-select
       v-model="formData.building"
-      :items="['b1', 'b2']"
+      :items="buildings"
+      item-title="address"
+      item-value="id"
       label="Building"
     ></v-select>
     <v-file-input
@@ -29,18 +31,10 @@
 </template>
 
 <script setup>
-// name
-// price
-// description
-// area
-// image
-// building
 import { ref /*, computed*/ } from "vue";
-//   import { useStore } from "vuex";
+import axios from "axios";
 
-//   const store = useStore();
-
-//   const currentUserid = computed(() => store.state.user.id);
+const buildings = ref([]);
 
 const formData = ref({
   name: "",
@@ -52,8 +46,18 @@ const formData = ref({
 });
 
 const addApartment = () => {
-  console.log(formData.value);
+  axios.post("http://localhost:8000/api/add/apartment/", formData.value);
 };
+
+const init = () => {
+  axios.get("http://localhost:8000/api/buildings/").then((resp) => {
+    console.log(resp.data);
+    buildings.value = resp.data;
+    console.log(buildings.value);
+  });
+};
+
+init();
 </script>
 
 <style lang="scss" scoped></style>
