@@ -41,7 +41,7 @@
 </template>
 
 <script setup>
-import { ref, defineEmits, onMounted, watch } from "vue";
+import { ref, defineEmits, onMounted, watch, onUnmounted } from "vue";
 import axios from "axios";
 import { computed } from "vue";
 import { useStore } from "vuex";
@@ -73,9 +73,13 @@ const fetchMessages = () => {
   });
 };
 
-setTimeout(() => {
+const intervalId = setInterval(() => {
   fetchMessages();
 }, 1000);
+
+onUnmounted(() => {
+  clearInterval(intervalId);
+});
 
 const scrollToBottom = () => {
   // Use scrollIntoView to scroll to the bottom
