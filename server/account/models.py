@@ -15,6 +15,7 @@ class CustomUserManager(UserManager):
         name = self.name
         user = self.model(email=email,name=name,**extra_fields)
         user.set_password(password)
+        user.score = 0
         
         user.save(using=self.db)
         

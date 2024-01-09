@@ -1,9 +1,12 @@
+from ..model.models import Apartment
+
 class User:
     def __init__(self, username, email, password, role):
         self.email = email
         self.username = username
         self.password = password
         self.role = role
+        self.score = 0
 
     def get_username(self):
         return self.username
@@ -22,3 +25,4 @@ class User:
 
     def set_role(self, new_role):
         self.role = new_role
+

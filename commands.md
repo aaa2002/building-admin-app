@@ -13,3 +13,10 @@ Clientu merge pe :8080
 ```npm install //(prima data sau cand se da pull)```
 
 ```npm run serve```
+
+
+
+# Docker compose
+```bash
+$ docker compose up
+```
