@@ -51,6 +51,9 @@
 
   <v-container>
     <router-view />
+    <div>
+      <input v-model="message" @keyup.enter="sendMessage" placeholder="Type a message..." />
+    </div>
   </v-container>
 </template>
 
@@ -85,16 +88,33 @@ export default {
 
 <script setup>
 import { ref } from "vue";
-//import { useStore } from "vuex";
+import socketIOClient from "socket.io-client";
 
-//const store = useStore();
-
-//const activeUser = ref(store.state.user);
 const drawer = ref(false);
+const message = ref("");
 
 const toggleDrawer = () => {
   drawer.value = !drawer.value;
 };
+
+const sendMessage = () => {
+  if (message.value.trim() !== "") {
+    // Emit a socket event for chat message
+    socket.emit("chat message", message.value);
+    // Clear the input field
+    message.value = "";
+  }
+};
+
+// Connect to the Socket.IO server
+const socket = socketIOClient("http://localhost:3000");
+
+// Handle incoming chat messages
+socket.on("chat message", (msg) => {
+  console.log("Received message:", msg);
+  // You can handle the incoming message as needed
+  // For example, you may want to display it in the UI
+});
 </script>
 
 <style lang="scss" scoped></style>
