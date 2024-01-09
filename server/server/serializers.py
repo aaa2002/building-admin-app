@@ -7,7 +7,7 @@ class ApartmentBuildingSerializer(serializers.ModelSerializer):
         fields = ['id', 'address', 'admin', 'neighbourhood', 'lat', 'lng']
 
 class ApartmentSerializer(serializers.ModelSerializer):
-    building = ApartmentBuildingSerializer()  # Nested serializer for ApartmentBuilding
+    building = ApartmentBuildingSerializer()  
 
     class Meta:
         model = Apartment

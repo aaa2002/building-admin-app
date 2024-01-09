@@ -31,6 +31,8 @@ urlpatterns = [
     path('api/apartments/',api.apartment_list,name=''),
     path('api/apartments/<str:name>/', api.apartment_get, name='apartment-get'),
     path('api/apartments/<str:name>/image/', api.get_apartment_image, name='apartment-image'),
+    path('api/add/building/',api.add_apartment_building,name='apartment-building-get'),
+    path('api/add/apartment/',api.add_apartment,name='apartment-get'),
     path("admin/", admin.site.urls),
 ]
 
