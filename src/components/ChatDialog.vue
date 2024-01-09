@@ -73,6 +73,10 @@ const fetchMessages = () => {
   });
 };
 
+setTimeout(() => {
+  fetchMessages();
+}, 1000);
+
 const scrollToBottom = () => {
   // Use scrollIntoView to scroll to the bottom
   if (chatContainer.value) {
