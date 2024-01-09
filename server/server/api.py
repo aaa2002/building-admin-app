@@ -7,7 +7,7 @@ from django.templatetags.static import static
 from django.contrib.staticfiles import finders
 from .model.models import Apartment
 from .serializers import ApartmentSerializer
-from forms import ApartmentBuildingForm, ApartmentForm
+from .forms import ApartmentBuildingForm, ApartmentForm
 
 @api_view(['GET'])
 def apartment_list(request):

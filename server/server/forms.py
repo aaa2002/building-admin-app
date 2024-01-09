@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from model.models import ApartmentBuilding, Apartment
+from .model.models import ApartmentBuilding, Apartment
 
 class ApartmentBuildingForm(ModelForm):
     class Meta:
@@ -9,5 +9,5 @@ class ApartmentBuildingForm(ModelForm):
 class ApartmentForm(ModelForm):
     class Meta:
         model = Apartment
-        field = ['name','price','description','area','image','building']
+        fields = ['name', 'price', 'description', 'area', 'image', 'building']
     
