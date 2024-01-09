@@ -10,6 +10,7 @@
 </template>
 
 <script setup>
+import axios from "axios";
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
 
@@ -20,7 +21,7 @@ const currentUserid = computed(() => store.state.user.id);
 const formData = ref({
   address: "",
   admin: currentUserid.value,
-  neighborhood: "",
+  neighbourhood: "Gheorgheni",
   lat: 0,
   lng: 0,
 });
@@ -33,8 +34,10 @@ const setCoordinates = async (stringAddress) => {
     console.log(formData.value);
 };
 
-const addBuilding = () => {
-  setCoordinates(formData.value.address);
+const addBuilding = async () => {
+  await setCoordinates(formData.value.address);
+
+  axios.post("http://localhost:8000/api/add/building/", formData.value);
   console.log(formData.value);
 };
 </script>
