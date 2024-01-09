@@ -11,13 +11,11 @@
 
 <script setup>
 import { ref, computed } from "vue";
-// import axios from "axios";
 import { useStore } from "vuex";
 
 const store = useStore();
 
 const currentUserid = computed(() => store.state.user.id);
-// const coordinates = ref({ lat: 0, lng: 0 });
 
 const formData = ref({
   address: "",

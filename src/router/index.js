@@ -6,6 +6,7 @@ import LoginView from '../views/LoginView.vue';
 //import HomeView from '../views/HomeView.vue'
 import ProfileView from "../views/ProfileView.vue";
 import AddBuilding from "../views/AddBuilding.vue";
+import AddApartment from "../views/AddApartment.vue";
 
 const routes = [
   { path: '/',  name: 'home' },
@@ -15,6 +16,7 @@ const routes = [
   { path: '/login', name: 'login', component: LoginView},
   { path: '/profile', name: 'profile', component: ProfileView},
   { path: '/add/building', name: 'add-building', component: AddBuilding },
+  { path: '/add/apartment', name: 'add-apartment', component: AddApartment },
 ];
 
 const router = createRouter({
