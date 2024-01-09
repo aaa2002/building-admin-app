@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from account.models import User
 from enum import IntEnum    
 import uuid
 
@@ -7,7 +7,7 @@ import uuid
 class ApartmentBuilding(models.Model):
     id = models.UUIDField(primary_key=True, default = uuid.uuid4, editable=False)
     address = models.CharField(max_length=255, null=True)
-    admin = models.CharField(max_length=255, null=True) # make a table later
+    admin = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
     neighbourhood = models.CharField(max_length=255)
     lat = models.FloatField(null=True)
     lng = models.FloatField(null=True)
