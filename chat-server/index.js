@@ -46,27 +46,36 @@ async function run() {
     io.on('connection', (socket) => {
       console.log('A user connected');
 
-      socket.on('chat message', async (msg) => {
-        console.log('Received message:', msg);
+      socket.on('chat message', async (data) => {
+        console.log('Received message:', data.message);
         
         // Save the message to MongoDB
         await messagesCollection.insertOne({
-            /// TODO: Add the user information here
-            /// sender: senderId,
-            /// receiver: receiverId,
-          user: socket.id, // You might want to replace this with the actual user information
-          message: msg,
+          sender: data.user,
+          message: data.message,
           timestamp: new Date(),
         });
 
         // Broadcast the message to all connected clients
-        io.emit('chat message', msg);
+        io.emit('chat message', data.message);
       });
 
       socket.on('disconnect', () => {
         console.log('User disconnected');
       });
     });
+
+    // Create a GET endpoint to retrieve all messages
+    app.get('/api/messages', async (req, res) => {
+      try {
+        const allMessages = await messagesCollection.find().toArray();
+        res.json(allMessages);
+      } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+      }
+    });
+
   } finally {
     // Ensure that the client will close when you finish/error
     // Commenting this out to keep the MongoDB connection open while the server is running
