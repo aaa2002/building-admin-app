@@ -7,9 +7,9 @@
       <v-card-text>{{ apartment.description }}</v-card-text>
       <Marker :options="{ position: center }" />
 
-      <!-- <div class="map-wrapper">
-        <MapComponent :lat="apartment.building.lat" :lng="apartment.building.lng" />
-      </div> -->
+      <div class="map-wrapper">
+        <MapComponent :lat=apartment.building.lat :lng=apartment.building.lng />
+      </div>
 
       <v-card-actions>
         <v-btn color="primary">Contact</v-btn>
@@ -20,13 +20,17 @@
   </v-container>
 </template>
 
+<script setup>
+import MapComponent from "@/components/MapComponent.vue";
+</script>
+
 <script>
 import axios from "axios";
+
 export default {
   data() {
     return {
       apartment: null,
-      
     };
   },
   mounted() {
