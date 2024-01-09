@@ -7,6 +7,7 @@ from django.templatetags.static import static
 from django.contrib.staticfiles import finders
 from .model.models import Apartment
 from .serializers import ApartmentSerializer
+from forms import ApartmentBuildingForm, ApartmentForm
 
 @api_view(['GET'])
 def apartment_list(request):
@@ -44,4 +45,41 @@ def get_apartment_image(request, name):
     image_path = os.path.join(settings.MEDIA_ROOT, str(apartment.image))
     with open(image_path, 'rb') as image_file:
         return HttpResponse(image_file.read(), content_type='image/jpeg')
+    
+@api_view(['POST'])
+def add_apartment_building(request):
+    data = request.data
+    messages = 'success'
+    form = ApartmentBuildingForm({
+        'address' : data.get('address'),
+        'admin' : data.get('admin'),
+        'neighbourhood' : data.get('neighbourhood'),
+        'lat' : data.get('lat'),
+        'lng' : data.get('lng'),
+    })
+    if form.is_valid():
+        form.save()
+    else: 
+        print(form)
+        messages = 'error'
+    return JsonResponse({'message':messages})
+
+@api_view(['POST'])
+def add_apartment(request):
+    data = request.data
+    messages = 'success'
+    form = ApartmentForm({
+        'name' : data.get('name'),
+        'price' : data.get('price'),
+        'description' : data.get('description'),
+        'area' : data.get('area'),
+        'image' : data.get('image'),
+        'building' : data.get('building'),
+    })
+    if form.is_valid():
+        form.save()
+    else: 
+        print(form)
+        messages = 'error'
+    return JsonResponse({'message':messages})
     
