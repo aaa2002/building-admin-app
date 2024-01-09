@@ -69,6 +69,16 @@
           <v-list-item-title>Chat</v-list-item-title>
         </v-btn>
       </v-list-item>
+      <v-list-item class="drawer-item">
+        <v-btn
+        :to="{ name: 'add-building' }"
+          style="width: 100% !important; justify-content: flex-start"
+          :elevation="0"
+        >
+          <v-icon class="mr-2">mdi-office-building</v-icon>
+          <v-list-item-title>Add Apartment Building</v-list-item-title>
+        </v-btn>
+      </v-list-item>
     </v-list>
   </v-navigation-drawer>
 
