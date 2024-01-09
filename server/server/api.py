@@ -5,14 +5,21 @@ from django.shortcuts import get_object_or_404
 from django.conf import settings
 from django.templatetags.static import static
 from django.contrib.staticfiles import finders
-from .model.models import Apartment
-from .serializers import ApartmentSerializer
-from forms import ApartmentBuildingForm, ApartmentForm
+from .model.models import Apartment, ApartmentBuilding
+from .serializers import ApartmentSerializer, ApartmentBuildingSerializer
+from .forms import ApartmentBuildingForm, ApartmentForm
 
 @api_view(['GET'])
 def apartment_list(request):
     apartments = Apartment.objects.all()
     serializer=ApartmentSerializer(apartments,many=True)
+    
+    return JsonResponse(serializer.data, safe=False)
+
+@api_view(['GET'])
+def apartment_building_list(request):
+    apartment_buildings = ApartmentBuilding.objects.all()
+    serializer = ApartmentBuildingSerializer(apartment_buildings,many=True)
     
     return JsonResponse(serializer.data, safe=False)
 
