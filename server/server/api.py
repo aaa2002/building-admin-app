@@ -8,12 +8,45 @@ from django.contrib.staticfiles import finders
 from .model.models import Apartment, ApartmentBuilding
 from .serializers import ApartmentSerializer, ApartmentBuildingSerializer
 from .forms import ApartmentBuildingForm, ApartmentForm
+from math import radians, sin, cos, sqrt, atan2
 
-@api_view(['GET'])
-def apartment_list(request):
-    apartments = Apartment.objects.all()
-    serializer=ApartmentSerializer(apartments,many=True)
+# @api_view(['GET'])
+# def apartment_list(request):
+#     apartments = Apartment.objects.all()
+#     serializer=ApartmentSerializer(apartments,many=True)
     
+#     return JsonResponse(serializer.data, safe=False)
+
+@api_view(['POST'])
+def apartment_list(request):
+    user_lat = float(request.data['lat'])
+    user_lon = float(request.data['lon'])
+
+    # Function to calculate distance using Haversine formula
+    def haversine(lat1, lon1, lat2, lon2):
+        R = 6371  # Radius of the Earth in kilometers
+        dlat = radians(lat2 - lat1)
+        dlon = radians(lon2 - lon1)
+        a = sin(dlat / 2) ** 2 + cos(radians(lat1)) * cos(radians(lat2)) * sin(dlon / 2) ** 2
+        c = 2 * atan2(sqrt(a), sqrt(1 - a))
+        distance = R * c
+        return distance
+
+    apartments = Apartment.objects.all()
+
+    # Calculate distances and add to apartments
+    distances = []
+    for apartment in apartments:
+        distance = haversine(user_lat, user_lon, apartment.building.lat, apartment.building.lng)
+        distances.append((apartment, distance))
+
+    # Sort apartments by distance
+    sorted_apartments = sorted(distances, key=lambda x: x[1])
+
+    # Extract only the apartments from the sorted list
+    sorted_apartments = [apartment[0] for apartment in sorted_apartments]
+
+    serializer = ApartmentSerializer(sorted_apartments, many=True)
     return JsonResponse(serializer.data, safe=False)
 
 @api_view(['GET'])

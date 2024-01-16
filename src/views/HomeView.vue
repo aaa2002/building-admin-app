@@ -39,7 +39,7 @@
           <v-list-item-title>Home</v-list-item-title>
         </v-btn>
       </v-list-item>
-      <v-list-item class="drawer-item" v-if="!this.$store.state.user.is_staff">
+      <!-- <v-list-item class="drawer-item" v-if="!this.$store.state.user.is_staff">
         <v-btn
           style="width: 100% !important; justify-content: flex-start"
           :elevation="0"
@@ -48,7 +48,7 @@
           <v-icon class="mr-2">mdi-account-key</v-icon>
           <v-list-item-title>Admins</v-list-item-title>
         </v-btn>
-      </v-list-item>
+      </v-list-item> -->
       <v-list-item class="drawer-item">
         <v-btn
           style="width: 100% !important; justify-content: flex-start"
