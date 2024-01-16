@@ -47,6 +47,14 @@ const formData = ref({
 
 const addApartment = () => {
   axios.post("http://localhost:8000/api/add/apartment/", formData.value);
+  formData.value = {
+    name: "",
+    price: 0.0,
+    description: "",
+    area: 0.0,
+    image: null,
+    building: "",
+  };
 };
 
 const init = () => {

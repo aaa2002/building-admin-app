@@ -39,6 +39,7 @@ const addBuilding = async () => {
 
   axios.post("http://localhost:8000/api/add/building/", formData.value);
   console.log(formData.value);
+  formData.value.address = "";
 };
 </script>
 

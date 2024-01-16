@@ -69,7 +69,7 @@
           <v-list-item-title>Chat</v-list-item-title>
         </v-btn>
       </v-list-item>
-      <v-list-item class="drawer-item">
+      <v-list-item class="drawer-item"  v-if="currentUserid">
         <v-btn
           :to="{ name: 'add-building' }"
           style="width: 100% !important; justify-content: flex-start"
@@ -79,7 +79,7 @@
           <v-list-item-title>Add Apartment Building</v-list-item-title>
         </v-btn>
       </v-list-item>
-      <v-list-item class="drawer-item">
+      <v-list-item class="drawer-item"  v-if="currentUserid">
         <v-btn
           :to="{ name: 'add-apartment' }"
           style="width: 100% !important; justify-content: flex-start"
