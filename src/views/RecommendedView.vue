@@ -14,7 +14,11 @@
   </div>
 
   <div class="cards my-12">
-    <v-card class="mb-8" v-for="apartment in apartments" v-bind:key="apartment.id">
+    <v-card
+      class="mb-8"
+      v-for="apartment in apartments"
+      v-bind:key="apartment.id"
+    >
       <v-card-title>{{ apartment.name }}</v-card-title>
       <v-card-subtitle>$ {{ apartment.price }}</v-card-subtitle>
       <v-card-text>{{ apartment.description }}</v-card-text>
@@ -29,35 +33,50 @@
 <script>
 import axios from "axios";
 export default {
-  
-  data(){
-      return{
-        apartments:[],
-        image: null
-      }
+  data() {
+    return {
+      apartments: [],
+      image: null,
+      latLon: { lat: 0, lon: 0 },
+    };
   },
-  
+
   mounted() {
-    this.getApartments()
+    navigator.geolocation.getCurrentPosition((position) => {
+      this.latLon.lat = position.coords.latitude;
+      this.latLon.lon = position.coords.longitude;
+
+      this.getApartments();
+    });
   },
 
-  methods:{
-    getApartments(){
-      axios
-        .get('api/apartments/')
-        .then(response => {
-          console.log('data',response.data)
-          
-          this.apartments=response.data
-        })
-        .catch(error => {
-          console.log('error',error)
-        })
-    }
-  }
-}
-</script>
+  methods: {
+    getApartments() {
+      // axios
+      //   .get('api/apartments/')
+      //   .then(response => {
+      //     console.log('data',response.data)
 
+      //     this.apartments=response.data
+      //   })
+      //   .catch(error => {
+      //     console.log('error',error)
+      //   })
+
+      axios
+        .post("api/apartments/", {lat: this.latLon.lat, lon: this.latLon.lon})
+        .then((response) => {
+          console.log("data", response.data);
+
+          this.apartments = response.data;
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    },
+  },
+};
+</script>
 
 <script setup>
 // import { useStore } from "vuex";
