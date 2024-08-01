@@ -21,6 +21,6 @@ if [[ $(docker volume ls | tail -n 1 | awk '{print $2}') != "sqlite-volume" ]]; 
     docker volume create sqlite-volume
 fi 
 
-docker run ${container_flags} -p 8000:8000 \
+docker run --rm -it -p 8000:8000 \
   -v sqlite-volume:$(pwd)/server \
     server

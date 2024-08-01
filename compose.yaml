@@ -1,0 +1,27 @@
+services:
+  # backend:
+  #   build: 
+  #     context: server
+  #     dockerfile: docker/Dockerfile
+  #   ports:
+  #     - "8000:8000"
+  #   volumes:
+  #     - sqlite_volume:/server
+  #   environment:
+  #     - DJANGO_SUPERUSER_EMAIL=admin@example.com
+  #     - DJANGO_SUPERUSER_USERNAME=root                 
+  #     - DJANGO_SUPERUSER_PASSWORD=asdfasdf
+  frontend:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+  chatserver:
+    build: 
+      context: chat-server
+      dockerfile: docker/Dockerfile
+    ports:
+      - "3000:3000"
+volumes:
+  sqlite_volume:
